@@ -93,6 +93,24 @@ namespace Ex3.Models
             }
         }
 
+        public string FileName
+        {
+            get;
+            set;
+        }
+
+        public double Throttle
+        {
+            get;
+            set;
+        }
+
+        public double Rudder
+        {
+            get;
+            set;
+        }
+
         private static Info m_Instance = null;
 
         public static Info Instance
@@ -138,16 +156,24 @@ namespace Ex3.Models
             //sw = new StreamWriter(ns);
             string lonP = "get /position/longitude-deg\r\n";
             string latP = "get /position/latitude-deg\r\n";
+            string throttle = "get /controls/engines/current-engine/throttle\r\n";
+            string rudder = "get /controls/flight/rudder\r\n";
             string lonValue = getValue(lonP);
             string latValue = getValue(latP);
+            string throttleValue = getValue(throttle);
+            string rudderValue = getValue(rudder);
             Console.WriteLine("lon {0}, lat {1}",lonValue, latValue);
-            castD(lonValue, latValue);
+            castD(lonValue, latValue, throttleValue, rudderValue);
         }
 
-        public void castD(string lonValue, string latValue)
+        public void castD(string lonValue, string latValue, string throttleValue, string rudderValue)
         {
-            Lon = double.Parse(lonValue);
-            Lat = double.Parse(latValue);
+            Random r = new Random();
+            Lon = double.Parse(lonValue) + r.Next(50);
+            Lat = double.Parse(latValue) + r.Next(50);
+            Throttle = double.Parse(throttleValue);
+            Rudder = double.Parse(rudderValue);
+
         }
 
         public string getValue(string path)
@@ -163,6 +189,21 @@ namespace Ex3.Models
             writer.WriteElementString("Lon", this.Lon.ToString());
             writer.WriteElementString("Lat", this.Lat.ToString());
             writer.WriteEndElement();
+        }
+
+        public const string SCENARIO_FILE = "~/App_Data/{0}.txt";           // The Path of the Secnario
+
+        public void writeToFile()
+        {
+            string path = HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, FileName));
+            listen();
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(path, true))
+                {
+                    file.WriteLine(Lon.ToString());
+                    file.WriteLine(Lat.ToString());
+                    file.WriteLine(Throttle.ToString());
+                    file.WriteLine(Rudder.ToString());
+                }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "pathDisplay";
+    ViewBag.Title = "fileDisplay";
 }
 
 <body background="~/export-map-share.png" style="background-size:100% 100%; background-attachment:fixed">
@@ -47,8 +47,9 @@
     //setLat();
 
     var IntervalTime = @Session["time"] * 1000
+    var TimeoutT = @Session["seconds"] * 1000
     myTimer = (function () {
-        $.post("@Url.Action("GetVal")").done(function (xml) {
+        $.post("@Url.Action("WriteVal")").done(function (xml) {
             //alert(xml);
             var xmlDoc = $.parseXML( xml ),
             $xml = $( xmlDoc ),
@@ -78,7 +79,15 @@
         });
     });
 
-    setInterval(myTimer, IntervalTime);
+    //setInterval(myTimer, IntervalTime);
+    //myTimer();
+
+    timeout = (function () {
+        clearInterval(MyInterval)
+        alert("Done!");
+    });
+    setTimeout(timeout, TimeoutT);
+    var MyInterval = setInterval(myTimer, IntervalTime);
     myTimer();
 
 </script>
