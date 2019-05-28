@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 using System.Threading;
 using System.Text;
-
 using System.Net;
 using System.Net.Sockets;
-
+using System.IO;
+using System.Xml;
 
 namespace Ex3.Models
 {
@@ -17,12 +16,15 @@ namespace Ex3.Models
         private double lon, lat;
         private string ip;
         private int port, time;
+        private NetworkStream ns;
+        private StreamReader sr;
+        //private StreamWriter sw;
 
         //Thread threadI;
 
         TcpClient _client;
 
-        TcpListener listener;
+        //TcpListener listener;
 
         // while connected keep listening to the data received from the flightGear
  //       public bool shouldStop
@@ -120,79 +122,47 @@ namespace Ex3.Models
         //_client.Close();
         //}
 
-        //public void connect()
-        //{
-        //    // listen to the client
-        //    IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
-        //    listener = new TcpListener(ep);
-        //    listener.Start();
-        //    //Console.WriteLine("gggg");
-        //    _client = listener.AcceptTcpClient();
-        //    //Console.WriteLine("Info channel: Client connected");
-        //    //threadI = new Thread(() => listen());
-        //    //threadI.Start();
-        //}
-
         public void connect()
         {
             // connecting as client
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), port);
             _client = new TcpClient();
             _client.Connect(ep);
-            //listener = new TcpListener(ep);
-            //listener.Start();
-            //_client = listener.AcceptTcpClient();
-            //Console.WriteLine("You are connected");
         }
 
         // calls this function every four seconds
         public void listen()
         {
-            Byte[] bytes;
-            NetworkStream ns = _client.GetStream();
-            // if there is a message - listen and read it
-            if (_client.ReceiveBufferSize > 0)
-            {
-                bytes = new byte[_client.ReceiveBufferSize];
-                ns.Read(bytes, 0, _client.ReceiveBufferSize);
-                string msg = Encoding.ASCII.GetString(bytes); //the message incoming
-                splitMsg(msg);
-                //Console.WriteLine("info");
-                //Console.WriteLine(Lon);
-                //Console.WriteLine(Lat);
-                //Console.WriteLine(msg);
-            }
-            ns.Close();
-            //_client.Close();
-            //listener.Stop();
+            ns = _client.GetStream();
+            sr = new StreamReader(ns);
+            //sw = new StreamWriter(ns);
+            string lonP = "get /position/longitude-deg\r\n";
+            string latP = "get /position/latitude-deg\r\n";
+            string lonValue = getValue(lonP);
+            string latValue = getValue(latP);
+            Console.WriteLine("lon {0}, lat {1}",lonValue, latValue);
+            castD(lonValue, latValue);
         }
 
-        public void splitMsg(string msg)
+        public void castD(string lonValue, string latValue)
         {
-            string[] splitMs = msg.Split(',');
-            Lon = double.Parse(splitMs[0]);
-            Lat = double.Parse(splitMs[1]);
+            Lon = double.Parse(lonValue);
+            Lat = double.Parse(latValue);
         }
 
-        public void sendMessage(string[] splited, TcpClient tcpClient)
+        public string getValue(string path)
         {
-            splited = Parse("get /position/longitude-deg");
-            NetworkStream ns = tcpClient.GetStream();
-            foreach (string split in splited)
-            {
-                // Send data to server
-                string command = split;
-                command += "\r\n";
-                byte[] buffer = Encoding.ASCII.GetBytes(command);
-                ns.Write(buffer, 0, buffer.Length);
-            }
+            byte[] buffer = Encoding.ASCII.GetBytes(path);
+            ns.Write(buffer, 0, buffer.Length);
+            return sr.ReadLine().Split('=')[1].Split(' ')[1].Split('\'')[1];
         }
 
-        private string[] Parse(string line)
+        public void ToXml(XmlWriter writer)
         {
-            string[] newLine = { "\r\n" };
-            string[] input = line.Split(newLine, StringSplitOptions.None);
-            return input;
+            writer.WriteStartElement("Val");
+            writer.WriteElementString("Lon", this.Lon.ToString());
+            writer.WriteElementString("Lat", this.Lat.ToString());
+            writer.WriteEndElement();
         }
     }
 }

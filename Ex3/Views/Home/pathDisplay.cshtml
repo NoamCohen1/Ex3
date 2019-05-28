@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "pathDisplay";
+}
+
+<body background="~/export-map-share.png" style="background-size:100% 100%; background-attachment:fixed">
+</body>
+
+<canvas id="myCanvas"
+        style="border:1px;"></canvas>
+<script>
+    var IntervalTime = @Session["time"] * 1000
+    myTimer = (function () {
+        $.post( "@Url.Action("GetEmployee")").done(function (xml) {
+                var xmlDoc = $.parseXML( xml ),
+                $xml = $( xmlDoc ),
+                FirstName = $xml.find( "FirstName" ).text();
+                LastName = $xml.find( "LastName" ).text();
+                Salary = $xml.find("Salary").text();
+
+                $("#prodId").text(FirstName);
+                $("#prodName").text(LastName);
+                $("#prodSalary").text(Salary);
+
+        });
+    });
+
+    setInterval(myTimer, IntervalTime);
+    myTimer();
+
+    $("#btnSearch").click(function () {
+        var input = {
+            name: $("#NameID").val(),
+        };
+        $.post("@Url.Action("Search", "First")", input).done(function (data) {
+            var xmlDoc = $.parseXML(data),
+                $xml = $(xmlDoc),
+                FirstName = $xml.find("FirstName").text();
+            LastName = $xml.find("LastName").text();
+            Salary = $xml.find("Salary").text();
+
+            $("#lstProducts").append("<li>" + FirstName + " " + LastName + " : $" + Salary + "</li>");
+        });
+    });
+
+</script>

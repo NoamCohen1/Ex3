@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "pointDisplay";
+}
+
+
+<body background="~/export-map-share.png" style="background-size:100% 100%; background-attachment:fixed">
+</body>
+
+<canvas id="myCanvas"
+        style="border:1px;"></canvas>
+<script>
+    var lon = @ViewBag.lon;
+    var lat = @ViewBag.lat;
+    var canvas = document.getElementById("myCanvas");
+    //var ctx = canvas.getContext("2d");
+    //ctx.strokeStyle = "pink";
+    //ctx.beginPath();
+    //ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+    //ctx.stroke();
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    function setLon() {
+        if (lon < 0)
+            lon = (canvas.width / 2) * (1 - Math.abs(lon) / 180)
+        else
+            lon = (canvas.width / 2) * (1 + Math.abs(lon) / 180)
+    }
+
+    function setLat() {
+        if (lat < 0)
+            lat = (canvas.height / 2) * (1 - Math.abs(lat) / 90)
+        else
+            lat = (canvas.height / 2) * (1 + Math.abs(lat) / 90)
+    }
+
+    function drawLocation() {
+        var ctx = canvas.getContext("2d");
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(lon, lat, 10, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+    }
+    setLon();
+    setLat();
+    drawLocation();
+</script>
+
+<h2>@*GALLLLLLLL*@</h2>
+
