@@ -11,12 +11,22 @@ namespace Ex3.Controllers
 {
     public class HomeController : Controller
     {
+        public Boolean isConnected;
+
+        public HomeController()
+        {
+            isConnected = false;
+        }
         // GET: Home
         public ActionResult Index()
         {
             Info.Instance.Ip = "127.0.0.1";
             Info.Instance.Port = 5400;
-            Info.Instance.connect();
+            if(!isConnected)
+            {
+                Info.Instance.connect();
+                isConnected = true;
+            }
             Info.Instance.listen();
             ViewBag.lon = Info.Instance.Lon;
             ViewBag.lat = Info.Instance.Lat;
@@ -31,7 +41,11 @@ namespace Ex3.Controllers
             //Info.Instance.Port = 5402; 
             Info.Instance.Ip = ip;
             Info.Instance.Port = port;
-            Info.Instance.connect();
+            if (!isConnected)
+            {
+                Info.Instance.connect();
+                isConnected = true;
+            }
             Info.Instance.listen();
             ViewBag.lon = Info.Instance.Lon;
             ViewBag.lat = Info.Instance.Lat;
@@ -44,7 +58,11 @@ namespace Ex3.Controllers
             Info.Instance.Ip = ip;
             Info.Instance.Port = port;
             Info.Instance.Time = time;
-            Info.Instance.connect();
+            if (!isConnected)
+            {
+                Info.Instance.connect();
+                isConnected = true;
+            }
             Info.Instance.listen();
             Session["time"] = time;
             ViewBag.lon = Info.Instance.Lon;
@@ -59,7 +77,11 @@ namespace Ex3.Controllers
             Info.Instance.Port = port;
             Info.Instance.Time = time;
             Info.Instance.FileName = fileName;
-            Info.Instance.connect();
+            if (!isConnected)
+            {
+                Info.Instance.connect();
+                isConnected = true;
+            }
             Session["time"] = time;
             Session["seconds"] = seconds;
             ViewBag.lon = Info.Instance.Lon;
@@ -67,12 +89,20 @@ namespace Ex3.Controllers
             return View();
         }
 
+        // GET: Home
+        public ActionResult loadDisplay(string fileName, int time)
+        {
+            Session["time"] = time;
+            Info.Instance.FileName = fileName;
+            //ViewBag.lon = Info.Instance.Lon;
+            //ViewBag.lat = Info.Instance.Lat;
+           
+            return View();
+        }
+
         [HttpPost]
         public string GetVal()
         {
-            //Info.Instance.Lon += 10;
-            //Info.Instance.Lat += 10;
-
             Info.Instance.listen();
 
             return ToXml();
@@ -81,9 +111,16 @@ namespace Ex3.Controllers
         [HttpPost]
         public string WriteVal()
         {
-            //Info.Instance.Lon += 10;
-            //Info.Instance.Lat += 10;
             Info.Instance.writeToFile();
+
+            return ToXml();
+        }
+
+        [HttpPost]
+        public string ReadVal()
+        {
+            Info.Instance.readFromFile();
+            ViewBag.endOfFile = Info.Instance.EndOfFile;
 
             return ToXml();
         }

@@ -13,6 +13,7 @@ namespace Ex3.Models
 {
     public class Info
     {
+        private int endOfFile = 0;
         private double lon, lat;
         private string ip;
         private int port, time;
@@ -111,6 +112,12 @@ namespace Ex3.Models
             set;
         }
 
+        public int EndOfFile
+        {
+            get;
+            set;
+        }
+
         private static Info m_Instance = null;
 
         public static Info Instance
@@ -168,6 +175,7 @@ namespace Ex3.Models
 
         public void castD(string lonValue, string latValue, string throttleValue, string rudderValue)
         {
+            // TODO - delete
             Random r = new Random();
             Lon = double.Parse(lonValue) + r.Next(50);
             Lat = double.Parse(latValue) + r.Next(50);
@@ -188,10 +196,11 @@ namespace Ex3.Models
             writer.WriteStartElement("Val");
             writer.WriteElementString("Lon", this.Lon.ToString());
             writer.WriteElementString("Lat", this.Lat.ToString());
+            writer.WriteElementString("EndOfFile", this.EndOfFile.ToString());
             writer.WriteEndElement();
         }
 
-        public const string SCENARIO_FILE = "~/App_Data/{0}.txt";           // The Path of the Secnario
+        public const string SCENARIO_FILE = "~/App_Data/{0}.txt"; // The Path of the Secnario
 
         public void writeToFile()
         {
@@ -204,6 +213,26 @@ namespace Ex3.Models
                     file.WriteLine(Throttle.ToString());
                     file.WriteLine(Rudder.ToString());
                 }
+        }
+
+        public static int currLine = 0;
+
+        public void readFromFile()
+        {
+            string path = HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, FileName));
+            string[] lines = System.IO.File.ReadAllLines(path); // reading all the lines of the file
+            if (currLine >= lines.Length)
+            {
+                EndOfFile = 1;
+               
+            }
+
+            else
+            {
+                Lon = double.Parse(lines[currLine]);
+                Lat = double.Parse(lines[++currLine]);
+                currLine += 3;
+            }
         }
     }
 }

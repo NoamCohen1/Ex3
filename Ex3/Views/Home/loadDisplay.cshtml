@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "fileDisplay";
+    ViewBag.Title = "loadDisplay";
 }
 
 <body background="~/export-map-share.png" style="background-size:100% 100%; background-attachment:fixed">
@@ -22,11 +22,11 @@
 <canvas id="myCanvas"
         style="border:1px;"></canvas>
 <script>
-
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
+
     function setLon(lon) {
         if (lon < 0)
             return (canvas.width / 2) * (1 - Math.abs(lon) / 180)
@@ -40,18 +40,27 @@
         else
             return (canvas.height / 2) * (1 + Math.abs(lat) / 90)
     }
-
+    
     var IntervalTime = @Session["time"] * 1000
-    var TimeoutT = @Session["seconds"] * 1000
     myTimer = (function () {
-        $.post("@Url.Action("WriteVal")").done(function (xml) {
-            //alert(xml);
-            var xmlDoc = $.parseXML( xml ),
-            $xml = $( xmlDoc ),
+        //if (parseInt(endOfFile)) {
+        //    clearInterval(MyInterval)
+        //    alert("Done!");
+        //}
+        $.post("@Url.Action("ReadVal")").done(function (xml) {
+            var xmlDoc = $.parseXML(xml),
+                $xml = $(xmlDoc),
+                endOfFile = $xml.find("EndOfFile").text;
+            endOfFile = parseInt(endOfFile);
+            if (endOfFile) {
+                clearInterval(MyInterval)
+                alert("Done!");
+            }
             lon = $xml.find("Lon").text();
             lon = setLon(parseFloat(lon));
             lat = $xml.find("Lat").text();
             lat = setLat(parseFloat(lat));
+            
 
             $("#lonNum").text(lon);
             $("#latNum").text(lat);
@@ -74,15 +83,7 @@
         });
     });
 
-    //setInterval(myTimer, IntervalTime);
-    //myTimer();
-
-    timeout = (function () {
-        clearInterval(MyInterval)
-        alert("Done!");
-    });
-    setTimeout(timeout, TimeoutT);
-    var MyInterval = setInterval(myTimer, IntervalTime);
+    setInterval(myTimer, IntervalTime);
     myTimer();
 
 </script>

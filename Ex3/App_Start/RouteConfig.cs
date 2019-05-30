@@ -18,14 +18,17 @@ namespace Ex3
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-            routes.MapRoute("pointDisplay", "display/{ip}/{port}",
-            defaults: new { controller = "Home", action = "pointDisplay" }
-           );
+           // routes.MapRoute("pointDisplay", "{controller}/{action}/{ip}/{port}",
+           // defaults: new { controller = "Home", action = "pointDisplay" }
+           //);
             routes.MapRoute("pathDisplay", "display/{ip}/{port}/{time}",
-            defaults: new { controller = "Home", action = "pathDisplay", time = UrlParameter.Optional }
+            defaults: new { controller = "Home", action = "pathDisplay" }
            );
             routes.MapRoute("fileDisplay", "display/{ip}/{port}/{time}/{seconds}/{fileName}",
-            defaults: new { controller = "Home", action = "fileDisplay" }
+            defaults: new { controller = "Home", action = "fileDisplay", }
+           );
+            routes.MapRoute("loadDisplay", "{controller}/{action}/{fileName}/{time}",
+            defaults: new { controller = "Home", action = "loadDisplay", }
            );
         }
     }
