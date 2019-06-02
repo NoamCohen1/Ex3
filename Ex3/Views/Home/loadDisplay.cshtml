@@ -28,17 +28,11 @@
     canvas.width = window.innerWidth;
 
     function setLon(lon) {
-        if (lon < 0)
-            return (canvas.width / 2) * (1 - Math.abs(lon) / 180)
-        else
-            return (canvas.width / 2) * (1 + Math.abs(lon) / 180)
+        return (lon + 180) * (canvas.width / 360);
     }
 
     function setLat(lat) {
-        if (lat < 0)
-            return (canvas.height / 2) * (1 - Math.abs(lat) / 90)
-        else
-            return (canvas.height / 2) * (1 + Math.abs(lat) / 90)
+        return (lat + 90) * (canvas.height / 180);
     }
     
     var IntervalTime = @Session["time"] * 1000
@@ -49,12 +43,12 @@
         //}
         $.post("@Url.Action("ReadVal")").done(function (xml) {
             var xmlDoc = $.parseXML(xml),
-                $xml = $(xmlDoc),
-                endOfFile = $xml.find("EndOfFile").text;
+            $xml = $(xmlDoc),
+            endOfFile = $xml.find("EndOfFile").text();
             endOfFile = parseInt(endOfFile);
             if (endOfFile) {
-                clearInterval(MyInterval)
                 alert("Done!");
+                clearInterval(MyInterval)
             }
             lon = $xml.find("Lon").text();
             lon = setLon(parseFloat(lon));
@@ -83,7 +77,7 @@
         });
     });
 
-    setInterval(myTimer, IntervalTime);
+    var MyInterval = setInterval(myTimer, IntervalTime);
     myTimer();
 
 </script>

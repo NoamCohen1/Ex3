@@ -13,23 +13,27 @@ namespace Ex3
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute("chooseDisplay", "display/{str}/{num}",
+            defaults: new { controller = "Home", action = "chooseDisplay" }
+           );
+
+            routes.MapRoute("pathDisplay", "display/{ip}/{port}/{time}",
+            defaults: new { controller = "Home", action = "pathDisplay" }
+           );
+
+            routes.MapRoute("fileDisplay", "save/{ip}/{port}/{time}/{seconds}/{fileName}",
+            defaults: new { controller = "Home", action = "fileDisplay" }
+           );
+
+           // routes.MapRoute("loadDisplay", "display/{fileName}/{time}",
+           // defaults: new { controller = "Home", action = "loadDisplay", }
+           //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-           // routes.MapRoute("pointDisplay", "{controller}/{action}/{ip}/{port}",
-           // defaults: new { controller = "Home", action = "pointDisplay" }
-           //);
-            routes.MapRoute("pathDisplay", "display/{ip}/{port}/{time}",
-            defaults: new { controller = "Home", action = "pathDisplay" }
-           );
-            routes.MapRoute("fileDisplay", "display/{ip}/{port}/{time}/{seconds}/{fileName}",
-            defaults: new { controller = "Home", action = "fileDisplay", }
-           );
-            routes.MapRoute("loadDisplay", "{controller}/{action}/{fileName}/{time}",
-            defaults: new { controller = "Home", action = "loadDisplay", }
-           );
         }
     }
 }

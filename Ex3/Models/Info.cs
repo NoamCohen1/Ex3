@@ -13,7 +13,7 @@ namespace Ex3.Models
 {
     public class Info
     {
-        private int endOfFile = 0;
+        
         private double lon, lat;
         private string ip;
         private int port, time;
@@ -176,10 +176,10 @@ namespace Ex3.Models
         public void castD(string lonValue, string latValue, string throttleValue, string rudderValue)
         {
             // TODO - delete
-            Random r = new Random();
+            //Random r = new Random();
             //
-            Lon = double.Parse(lonValue) + r.Next(50);
-            Lat = double.Parse(latValue) + r.Next(50);
+            Lon = double.Parse(lonValue);
+            Lat = double.Parse(latValue);
             Throttle = double.Parse(throttleValue);
             Rudder = double.Parse(rudderValue);
 
@@ -225,9 +225,8 @@ namespace Ex3.Models
             if (currLine >= lines.Length)
             {
                 EndOfFile = 1;
-               
+                currLine = 0;
             }
-
             else
             {
                 Lon = double.Parse(lines[currLine]);

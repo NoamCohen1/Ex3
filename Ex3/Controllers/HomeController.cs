@@ -94,6 +94,7 @@ namespace Ex3.Controllers
         {
             Session["time"] = time;
             Info.Instance.FileName = fileName;
+            Info.Instance.EndOfFile = 0;
             //ViewBag.lon = Info.Instance.Lon;
             //ViewBag.lat = Info.Instance.Lat;
            
@@ -120,7 +121,6 @@ namespace Ex3.Controllers
         public string ReadVal()
         {
             Info.Instance.readFromFile();
-            ViewBag.endOfFile = Info.Instance.EndOfFile;
 
             return ToXml();
         }
@@ -142,6 +142,19 @@ namespace Ex3.Controllers
             writer.WriteEndDocument();
             writer.Flush();
             return sb.ToString();
+        }
+
+        public ActionResult chooseDisplay(string str, int num)
+        {
+            System.Net.IPAddress ip = null;
+            bool isValid = System.Net.IPAddress.TryParse(str, out ip);
+            if (isValid)
+            {
+                pointDisplay(str, num);
+                return View("pointDisplay");
+            }
+            loadDisplay(str, num);
+            return View("loadDisplay");
         }
     }
 }
