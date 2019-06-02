@@ -177,6 +177,7 @@ namespace Ex3.Models
         {
             // TODO - delete
             Random r = new Random();
+            //
             Lon = double.Parse(lonValue) + r.Next(50);
             Lat = double.Parse(latValue) + r.Next(50);
             Throttle = double.Parse(throttleValue);
