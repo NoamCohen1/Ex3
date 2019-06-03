@@ -6,7 +6,7 @@
 <body background="~/export-map-share.png" style="background-size:100% 100%; background-attachment:fixed">
 </body>
 
-<div>
+@*<div>
     <table>
         <tr>
             <td>lon:  </td>
@@ -17,7 +17,7 @@
             <td><p type="text" id="latNum" size="50"></p></td>
         </tr>
     </table>
-</div>
+</div>*@
 
 <canvas id="myCanvas"
         style="border:1px;"></canvas>
@@ -29,11 +29,11 @@
     canvas.width = window.innerWidth;
 
     function setLon(lon) {
-        return (lon + 180) * (canvas.width / 360);
+        return Math.abs((lon + 180) * (canvas.width / 360));
     }
 
     function setLat(lat) {
-        return (lat + 90) * (canvas.height / 180);
+        return Math.abs((lat - 90) * (canvas.height / 180));
     }
 
     //setLon();
