@@ -17,6 +17,7 @@ namespace Ex3.Controllers
         {
             isConnected = false;
         }
+
         // GET: Home
         public ActionResult Index()
         {
@@ -33,12 +34,9 @@ namespace Ex3.Controllers
             return View();
         }
 
-
         [HttpGet]
         public ActionResult pointDisplay(string ip, int port)
         {
-            //Info.Instance.Ip = "127.0.0.1";
-            //Info.Instance.Port = 5402; 
             Info.Instance.Ip = ip;
             Info.Instance.Port = port;
             if (!isConnected)
@@ -94,10 +92,7 @@ namespace Ex3.Controllers
         {
             Session["time"] = time;
             Info.Instance.FileName = fileName;
-            Info.Instance.EndOfFile = 0;
-            //ViewBag.lon = Info.Instance.Lon;
-            //ViewBag.lat = Info.Instance.Lat;
-           
+            Info.Instance.EndOfFile = 0;           
             return View();
         }
 
@@ -134,11 +129,9 @@ namespace Ex3.Controllers
             XmlWriter writer = XmlWriter.Create(sb, settings);
 
             writer.WriteStartDocument();
-            //writer.WriteStartElement("Val");
 
             Info.Instance.ToXml(writer);
 
-            //writer.WriteEndElement();
             writer.WriteEndDocument();
             writer.Flush();
             return sb.ToString();

@@ -25,10 +25,6 @@ namespace Ex3
             defaults: new { controller = "Home", action = "fileDisplay" }
            );
 
-           // routes.MapRoute("loadDisplay", "display/{fileName}/{time}",
-           // defaults: new { controller = "Home", action = "loadDisplay", }
-           //);
-
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

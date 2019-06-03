@@ -37,10 +37,6 @@
     
     var IntervalTime = @Session["time"] * 1000
     myTimer = (function () {
-        //if (parseInt(endOfFile)) {
-        //    clearInterval(MyInterval)
-        //    alert("Done!");
-        //}
         $.post("@Url.Action("ReadVal")").done(function (xml) {
             var xmlDoc = $.parseXML(xml),
             $xml = $(xmlDoc),
@@ -54,7 +50,6 @@
             lon = setLon(parseFloat(lon));
             lat = $xml.find("Lat").text();
             lat = setLat(parseFloat(lat));
-            
 
             $("#lonNum").text(lon);
             $("#latNum").text(lat);

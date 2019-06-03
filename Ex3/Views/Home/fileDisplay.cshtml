@@ -69,13 +69,11 @@
         });
     });
 
-    //setInterval(myTimer, IntervalTime);
-    //myTimer();
-
     timeout = (function () {
         clearInterval(MyInterval)
         alert("Done!");
     });
+
     setTimeout(timeout, TimeoutT);
     var MyInterval = setInterval(myTimer, IntervalTime);
     myTimer();

@@ -13,26 +13,13 @@ namespace Ex3.Models
 {
     public class Info
     {
-        
         private double lon, lat;
         private string ip;
         private int port, time;
         private NetworkStream ns;
         private StreamReader sr;
-        //private StreamWriter sw;
-
-        //Thread threadI;
 
         TcpClient _client;
-
-        //TcpListener listener;
-
-        // while connected keep listening to the data received from the flightGear
- //       public bool shouldStop
- //       {
- //           get;
- //           set;
- //       }
 
         public double Lon
         {
@@ -132,21 +119,6 @@ namespace Ex3.Models
             }
         }
 
-        //private Info() {
-        //shouldStop = false;
-        //}
-
-        //public void closeThread()
-        //{
-        //    threadI.Abort();
-        //}
-
-        //public void disConnect()
-        //{
-        //shouldStop = true;
-        //_client.Close();
-        //}
-
         public void connect()
         {
             // connecting as client
@@ -160,7 +132,6 @@ namespace Ex3.Models
         {
             ns = _client.GetStream();
             sr = new StreamReader(ns);
-            //sw = new StreamWriter(ns);
             string lonP = "get /position/longitude-deg\r\n";
             string latP = "get /position/latitude-deg\r\n";
             string throttle = "get /controls/engines/current-engine/throttle\r\n";
@@ -175,14 +146,10 @@ namespace Ex3.Models
 
         public void castD(string lonValue, string latValue, string throttleValue, string rudderValue)
         {
-            // TODO - delete
-            //Random r = new Random();
-            //
             Lon = double.Parse(lonValue);
             Lat = double.Parse(latValue);
             Throttle = double.Parse(throttleValue);
             Rudder = double.Parse(rudderValue);
-
         }
 
         public string getValue(string path)
