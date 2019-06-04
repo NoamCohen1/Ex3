@@ -1,0 +1,77 @@
+commit 4fdc86c3c17a65646649678e33a76c12d2729246
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Mon Jun 3 10:53:38 2019 +0300
+
+    hope final push
+
+commit f6a86ac3dbac1fcf083a83a40e485ac2dddcd197
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Mon Jun 3 10:41:40 2019 +0300
+
+    last change
+
+commit 2d123c3cce82f432feac18346e00117275b52748
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Sun Jun 2 16:59:13 2019 +0300
+
+    finish project :)
+
+commit e3303f3861f0117303dd09aafc0be59e0fa0a2c0
+Author: Gal Marcovich <gal.marcovich@live.biu.ac.il>
+Date:   Sun Jun 2 12:38:59 2019 +0300
+
+    change2
+
+commit d76a782ea425a462e15c28b8f913fb60c2973359
+Author: Gal Marcovich <gal.marcovich@live.biu.ac.il>
+Date:   Sun Jun 2 12:27:18 2019 +0300
+
+    change
+
+commit 914a9293dcb9eecf169b4d1e0c730177c83170f9
+Author: Gal Marcovich <gal.marcovich@live.biu.ac.il>
+Date:   Thu May 30 17:12:18 2019 +0300
+
+    loadDisplay
+
+commit c935a2006314914b0b4ac001f999b180a1c7fca4
+Author: Gal Marcovich <gal.marcovich@live.biu.ac.il>
+Date:   Tue May 28 20:45:25 2019 +0300
+
+    fileDisplay, pathDisplay
+
+commit 7b3417677dae7a119560c3f878e38514236f4e7d
+Author: Gal Marcovich <gal.marcovich@live.biu.ac.il>
+Date:   Tue May 28 15:23:28 2019 +0300
+
+    pointDisplay + pathDisplay
+
+commit 4de1dfe4d1f7e0ca37f4ca7e43cfe4e3e285cabf
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Sun May 26 19:23:31 2019 +0300
+
+    Info - changed the flight gear to be the server and the program to be the client.
+
+commit ab8ab10da449fbb2e5b92bc028badd2d2ba9081e
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Thu May 23 16:32:09 2019 +0300
+
+    Add the map as a background
+
+commit 7af6d3e1de6598501f346e620e4442d1e8cb3963
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Thu May 23 16:16:49 2019 +0300
+
+    add Layout
+
+commit 87f280f6afef5f330c1b543fc092f47df6a996df
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Thu May 23 14:32:54 2019 +0300
+
+    Add project files.
+
+commit 1885aa9aa0e14d128fe9383d15f0cf099603442f
+Author: Noam Cohen <noam.cohen4@live.biu.ac.il>
+Date:   Thu May 23 14:32:51 2019 +0300
+
+    Add .gitignore and .gitattributes.
